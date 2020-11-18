@@ -1,4 +1,4 @@
-package sequensual
+package main
 
 import (
 	"fmt"

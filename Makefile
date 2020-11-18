@@ -1,6 +1,9 @@
 build:
 	GOOS=linux GOARCH=amd64 go build -o bin/sequencer ./sequencer.go ./timer.go ./constants.go
 
+run:
+	go run ./sequencer.go ./timer.go ./constants.go
+
 deps:
 	go get ./...
 

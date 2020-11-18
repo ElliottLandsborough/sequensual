@@ -1,4 +1,4 @@
-package sequensual
+package main
 
 // Pulses Per Quarter Note.  A synchronization primative used in music technology.
 var Ppqn = 24.0
