@@ -4,10 +4,6 @@ import (
 	"fmt"
 )
 
-func main() {
-    fmt.Println("hello world")
-}
-
 // Sequencer describes the mechanism that
 // Triggers and synchronizses a Pattern for audio playback.
 type Sequencer struct {
@@ -18,8 +14,13 @@ type Sequencer struct {
 // NewSequencer creates and returns a pointer to a New Sequencer.
 // Returns an error if there is one encountered
 // During initializing portaudio, or the default stream
-func NewSequencer() (error) {
-	return nil
+func NewSequencer() (*Sequencer, error) {
+	s := &Sequencer{
+		Timer: NewTimer(),
+		Beat:  0,
+	}
+
+	return s, nil
 }
 
 // Start starts the sequencer.
@@ -75,5 +76,6 @@ func (s *Sequencer) ProcessAudio(out []float32) {
 // PlayTrigger triggers a playback for any track that is active for the passed in index.
 // Triggers a playback by resetting the playhead for the matching tracks.
 func (s *Sequencer) PlayTrigger() {
+	fmt.Printf("woof")
 	return
 }
