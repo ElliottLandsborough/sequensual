@@ -36,13 +36,14 @@ RUN wget https://launchpad.net/~finkhaeuser-consulting/+archive/ubuntu/ppa/+file
 RUN dpkg -i libtwine1_1.0-2_amd64.deb
 RUN dpkg -i libtwine-dev_1.0-2_amd64.deb
 
+RUN mkdir /root/sushi
+WORKDIR /root/sushi
+RUN git clone -b 0.10.3  https://github.com/elk-audio/sushi.git /root/sushi
+RUN git submodule update --init
+
 # todo: fork this, grab from github
 # Missing fifo lib file https://github.com/KjellKod/lock-free-wait-free-circularfifo
 RUN mkdir /root/sushi/src/library/fifo
 COPY ./circularfifo_memory_relaxed_aquire_release.hpp /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
 
-RUN mkdir /root/sushi
-WORKDIR /root/sushi
-RUN git clone -b 0.10.3  https://github.com/elk-audio/sushi.git /root/sushi
-RUN git submodule update --init
 RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_VST3=off -DWITH_VST2=off -DWITH_LV2=off -DWITH_LINK=off" -b
