@@ -28,7 +28,7 @@ Any changes made will disappear if you kill the image or restart the computer. S
 
 ## Sound?
 
-When the docker image has finished building, the last thing it does is map the 'config/asound.conf' file to '/etc/asound.conf'. We can change it without having to ssh into the box. Sadly, we still need to ssh into the box to find out what sound card we want...
+When the docker image has finished building the last thing it does is map the 'config/asound.conf' file to '/etc/asound.conf'. We can change it without having to ssh into the box. Sadly, we still need to ssh into the box to find out what sound card we want...
 
 ```
 $ docker exec -ti sushi aplay -l
