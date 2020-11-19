@@ -37,7 +37,7 @@ RUN wget https://launchpad.net/~finkhaeuser-consulting/+archive/ubuntu/ppa/+file
 RUN dpkg -i libtwine1_1.0-2_amd64.deb
 RUN dpkg -i libtwine-dev_1.0-2_amd64.deb
 
-# VST2.4
+# VST2.4 - probably not the best way to do this...
 RUN mkdir /root/vst24-1
 WORKDIR /root/vst24-1
 RUN git clone https://github.com/ElliottLandsborough/ChuckDelay /root/vst24-1
@@ -59,7 +59,7 @@ RUN mkdir /root/sushi/src/library/fifo
 RUN ln -s /root/fifo/src/circularfifo_memory_relaxed_aquire_release.hpp /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
 
 # compile
-RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_LV2=off -DWITH_LINK=off -DVST2_SDK_PATH=/root/vst24-1" -b
+RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_LV2=off -DVST2_SDK_PATH=/root/vst24-1" -b
 
 # go stuff
 COPY . /root/sequensual
