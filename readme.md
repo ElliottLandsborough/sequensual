@@ -53,3 +53,9 @@ You can run this command to play sound from inside docker:
 ```
 $ docker exec -ti sushi bash -c "cd /code && make onetwo"
 ```
+
+You may need to restart your docker container for this to work if you made a change:
+
+```
+$ docker restart sushi
+```
