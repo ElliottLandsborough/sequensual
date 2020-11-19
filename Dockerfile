@@ -36,17 +36,28 @@ RUN wget https://launchpad.net/~finkhaeuser-consulting/+archive/ubuntu/ppa/+file
 RUN dpkg -i libtwine1_1.0-2_amd64.deb
 RUN dpkg -i libtwine-dev_1.0-2_amd64.deb
 
+# VST2.4
+RUN mkdir /root/vst24-1
+WORKDIR /root/vst24-1
+RUN git clone https://github.com/ElliottLandsborough/ChuckDelay /root/vst24-1
+RUN mkdir /root/vst24-2
+WORKDIR /root/vst24-2
+RUN git clone https://github.com/ElliottLandsborough/mathreverb /root/vst24-2
+RUN ln -s /root/vst24-2/VST2_SDK/pluginterfaces /root/vst24-1/pluginterfaces 
+
+# compile
 RUN mkdir /root/sushi
 WORKDIR /root/sushi
 RUN git clone -b 0.10.3  https://github.com/elk-audio/sushi.git /root/sushi
 RUN git submodule update --init
 
 # todo: fork this, grab from github
-# Missing fifo lib file https://github.com/KjellKod/lock-free-wait-free-circularfifo
+RUN mkdir /root/fifo
+RUN git clone https://github.com/ElliottLandsborough/lock-free-wait-free-circularfifo /root/fifo
 RUN mkdir /root/sushi/src/library/fifo
-COPY ./circularfifo_memory_relaxed_aquire_release.hpp /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
+RUN cp /root/fifo/src/circularfifo_memory_relaxed_aquire_release.hpp /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
 
-RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_VST3=off -DWITH_VST2=off -DWITH_LV2=off -DWITH_LINK=off" -b
+RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_VST3=off -DWITH_LV2=off -DWITH_LINK=off -DVST2_SDK_PATH=/root/vst24-1" -b
 
 COPY . /root/sequensual
 WORKDIR /root/sequensual
