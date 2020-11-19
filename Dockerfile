@@ -47,3 +47,7 @@ RUN mkdir /root/sushi/src/library/fifo
 COPY ./circularfifo_memory_relaxed_aquire_release.hpp /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
 
 RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_VST3=off -DWITH_VST2=off -DWITH_LV2=off -DWITH_LINK=off" -b
+
+COPY . /root/sequensual
+WORKDIR /root/sequensual
+RUN make build
