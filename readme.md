@@ -18,9 +18,7 @@ $ docker kill sushi
 
 ## Sound?
 
-When the docker image has finished building, the last thing it does is map the 'config/asound.conf' file to '/etc/asound.conf'. So we can change it without having to ssh into the box. Sadly, we still need to ssh into the box to find out what sound card we want...
-
-If it all worked, you should be able to run something like this:
+When the docker image has finished building, the last thing it does is map the 'config/asound.conf' file to '/etc/asound.conf'. We can change it without having to ssh into the box. Sadly, we still need to ssh into the box to find out what sound card we want...
 
 ```
 $ docker exec -ti sushi aplay -l
