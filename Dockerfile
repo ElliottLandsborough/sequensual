@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/London"
 
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y git cmake build-essential python
+RUN apt-get install -y git nano python cmake build-essential
 RUN apt-get install -y libsndfile1 libsndfile1-dev libasound2 libasound2-dev
 RUN apt-get install -y libprotobuf-dev protobuf-compiler autoconf libtool
 RUN apt-get install -y pkg-config cmake golang liblilv-dev
@@ -16,7 +16,7 @@ RUN apt-get install -y liblo7 liblo-dev
 RUN mkdir /root/grpc
 WORKDIR /root/grpc
 RUN git clone -b v1.10.1 https://github.com/grpc/grpc /root/grpc
-RUN git submodule update --init
+RUN git submodule update --init --recursive
 RUN mkdir -p /root/grpc/cmake/build
 WORKDIR /root/grpc/cmake/build
 RUN cmake -DBUILD_SHARED_LIBS=ON ../..
@@ -49,15 +49,15 @@ RUN ln -s /root/vst24-2/VST2_SDK/pluginterfaces /root/vst24-1/pluginterfaces
 RUN mkdir /root/sushi
 WORKDIR /root/sushi
 RUN git clone -b 0.10.3  https://github.com/elk-audio/sushi.git /root/sushi
-RUN git submodule update --init
+RUN git submodule update --init --recursive
 
 # todo: fork this, grab from github
 RUN mkdir /root/fifo
 RUN git clone https://github.com/ElliottLandsborough/lock-free-wait-free-circularfifo /root/fifo
 RUN mkdir /root/sushi/src/library/fifo
-RUN cp /root/fifo/src/circularfifo_memory_relaxed_aquire_release.hpp /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
+RUN ln -s /root/fifo/src/circularfifo_memory_relaxed_aquire_release.hpp /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
 
-RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_VST3=off -DWITH_LV2=off -DWITH_LINK=off -DVST2_SDK_PATH=/root/vst24-1" -b
+RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_LV2=off -DWITH_LINK=off -DVST2_SDK_PATH=/root/vst24-1" -b
 
 COPY . /root/sequensual
 WORKDIR /root/sequensual
