@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu
 
 ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/London"
 
@@ -22,10 +22,10 @@ RUN cd /root/grpc \
     git submodule update --init \
     mkdir -p cmake/build \
     cd cmake/build \
-    cmake ../.. \
-    make
+    cmake -DBUILD_SHARED_LIBS=ON ../.. \
+    make install
 
-RUN mkdir /root/sushi
-RUN git clone https://github.com/elk-audio/sushi.git /root/sushi
-RUN cd /root/sushi \
-    ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_VST2=off" -b
+#RUN mkdir /root/sushi
+#RUN git clone https://github.com/elk-audio/sushi.git /root/sushi
+#RUN cd /root/sushi \
+#    ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_VST2=off" -b
