@@ -38,4 +38,4 @@ RUN mkdir /root/sushi
 WORKDIR /root/sushi
 RUN git clone https://github.com/elk-audio/sushi.git /root/sushi
 RUN git submodule update --init
-#RUN ./generate --cmake-args="-DWITH_XENOMAI=off" -b
+RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_VST3=off -DWITH_VST2=off -DWITH_LV2=off" -b
