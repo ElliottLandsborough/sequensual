@@ -6,8 +6,10 @@ services:
     container_name: sushi
     volumes:
       - ./:/code
+      - ./config/asound.conf:/etc/asound.conf
     devices:
       - /dev/snd:/dev/snd # enable sound
     command: /root/sequensual/bin/sequencer
     group_add:
       - audio
+    privileged: true
