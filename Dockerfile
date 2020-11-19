@@ -36,9 +36,9 @@ RUN wget https://launchpad.net/~finkhaeuser-consulting/+archive/ubuntu/ppa/+file
 RUN dpkg -i libtwine1_1.0-2_amd64.deb
 RUN dpkg -i libtwine-dev_1.0-2_amd64.deb
 
-# Missing fifo lib
+# Missing fifo lib file https://github.com/KjellKod/lock-free-wait-free-circularfifo
 RUN mkdir /root/sushi/src/library/fifo
-COPY ./circularfifo_memory_relaxed_aquire_release.h /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
+COPY ./circularfifo_memory_relaxed_aquire_release.hpp /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
 
 RUN mkdir /root/sushi
 WORKDIR /root/sushi
