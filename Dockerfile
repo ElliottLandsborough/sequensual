@@ -9,6 +9,8 @@ RUN apt-get install -y libsndfile1 libsndfile1-dev libasound2 libasound2-dev
 RUN apt-get install -y libprotobuf-dev protobuf-compiler autoconf libtool
 RUN apt-get install -y pkg-config cmake golang liblilv-dev
 RUN apt-get install -y lilv-utils lv2-examples mda-lv2
+RUN apt-get install -y libjack-jackd2-0 libjack-jackd2-dev
+RUN apt-get install -y liblo7 liblo-dev
 
 # GRPC
 RUN mkdir /root/grpc
@@ -34,8 +36,12 @@ RUN wget https://launchpad.net/~finkhaeuser-consulting/+archive/ubuntu/ppa/+file
 RUN dpkg -i libtwine1_1.0-2_amd64.deb
 RUN dpkg -i libtwine-dev_1.0-2_amd64.deb
 
+# Missing fifo lib
+RUN mkdir /root/sushi/src/library/fifo
+COPY ./circularfifo_memory_relaxed_aquire_release.h /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
+
 RUN mkdir /root/sushi
 WORKDIR /root/sushi
-RUN git clone https://github.com/elk-audio/sushi.git /root/sushi
+RUN git clone -b 0.10.3  https://github.com/elk-audio/sushi.git /root/sushi
 RUN git submodule update --init
-RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_VST3=off -DWITH_VST2=off -DWITH_LV2=off" -b
+RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_VST3=off -DWITH_VST2=off -DWITH_LV2=off -DWITH_LINK=off" -b
