@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  sushi:
+    build: .
+    container_name: sushi
+    volumes:
+      - ./:/code
+    command: /bin/bash
