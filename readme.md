@@ -16,6 +16,16 @@ To stop it:
 $ docker kill sushi
 ```
 
+## Let me in!
+
+To ssh into the running docker image run this command:
+
+```
+$ docker exec -ti sushi /bin/bash
+```
+
+Any changes made will disappear if you kill the image or restart the computer. See 'Dockerfile' for steps that are taken to get it to the point that it is now.
+
 ## Sound?
 
 When the docker image has finished building, the last thing it does is map the 'config/asound.conf' file to '/etc/asound.conf'. We can change it without having to ssh into the box. Sadly, we still need to ssh into the box to find out what sound card we want...
