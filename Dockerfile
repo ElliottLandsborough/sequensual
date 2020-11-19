@@ -13,6 +13,10 @@ RUN apt-get install -y lilv-utils lv2-examples mda-lv2
 RUN apt-get install -y libjack-jackd2-0 libjack-jackd2-dev
 RUN apt-get install -y liblo7 liblo-dev
 
+# install alsa & pulse
+RUN apt-get update && apt-get install -y alsa-utils alsa-tools pulseaudio
+ENV ASOUND=PureAudio
+
 # GRPC
 RUN mkdir /root/grpc
 WORKDIR /root/grpc

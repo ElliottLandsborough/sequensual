@@ -6,4 +6,8 @@ services:
     container_name: sushi
     volumes:
       - ./:/code
+    devices:
+      - /dev/snd:/dev/snd # enable sound
     command: /root/sequensual/bin/sequencer
+    group_add:
+      - audio

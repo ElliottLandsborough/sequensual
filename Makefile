@@ -13,3 +13,6 @@ test:
 
 clean:
 	rm bin/sequencer
+
+onetwo:
+	cat /dev/urandom | padsp tee /dev/audio > /dev/null
