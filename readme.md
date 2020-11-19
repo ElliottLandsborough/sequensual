@@ -1,4 +1,6 @@
-# Hackery
+# Sequensual
+
+Sushi (elk-audio) + Docker
 
 ## How does this work?
 
