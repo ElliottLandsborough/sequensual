@@ -2,6 +2,7 @@ FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND="noninteractive" TZ="Europe/London"
 
+# Separated because of my bad internet connection
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y git nano python cmake build-essential
@@ -45,20 +46,22 @@ WORKDIR /root/vst24-2
 RUN git clone https://github.com/ElliottLandsborough/mathreverb /root/vst24-2
 RUN ln -s /root/vst24-2/VST2_SDK/pluginterfaces /root/vst24-1/pluginterfaces 
 
-# compile
+# prepare for compilation
 RUN mkdir /root/sushi
 WORKDIR /root/sushi
 RUN git clone -b 0.10.3  https://github.com/elk-audio/sushi.git /root/sushi
 RUN git submodule update --init --recursive
 
-# todo: fork this, grab from github
+# add fifo dependency
 RUN mkdir /root/fifo
 RUN git clone https://github.com/ElliottLandsborough/lock-free-wait-free-circularfifo /root/fifo
 RUN mkdir /root/sushi/src/library/fifo
 RUN ln -s /root/fifo/src/circularfifo_memory_relaxed_aquire_release.hpp /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
 
+# compile
 RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_LV2=off -DWITH_LINK=off -DVST2_SDK_PATH=/root/vst24-1" -b
 
+# go stuff
 COPY . /root/sequensual
 WORKDIR /root/sequensual
 RUN make build
