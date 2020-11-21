@@ -62,8 +62,9 @@ RUN git clone https://github.com/ElliottLandsborough/lock-free-wait-free-circula
 RUN mkdir /root/sushi/src/library/fifo
 RUN ln -s /root/fifo/src/circularfifo_memory_relaxed_aquire_release.hpp /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
 
-# compile
+# compile and add to path
 RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_LV2=off -DVST2_SDK_PATH=/root/vst24-1" -b
+ENV PATH="root/sushi/build/release:${PATH}"
 
 # go stuff
 COPY . /root/sequensual
