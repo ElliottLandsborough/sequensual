@@ -4,10 +4,10 @@ Sushi (elk-audio) + Docker
 
 ## How does this work?
 
-Install docker-compose first. Once it has installed you should be able to run this at the root of the project. It can take a while.
+Install docker-compose first, make sure docker is installed too. Once it has installed you should be able to run this at the root of the project. It can take a while.
 
 ```
-$ docker-compose up -d --build
+$ make dockerbuild
 ```
 
 At the moment the machine will run for a day or something, check the sleep function in main.go.
@@ -15,7 +15,7 @@ At the moment the machine will run for a day or something, check the sleep funct
 To stop it:
 
 ```
-$ docker kill sushi
+$ make kill
 ```
 
 ## Let me in!
@@ -23,7 +23,7 @@ $ docker kill sushi
 To ssh into the running docker image run this command:
 
 ```
-$ docker exec -ti sushi /bin/bash
+$ make ssh
 ```
 
 Any changes made will disappear if you kill the image or restart the computer. See 'Dockerfile' for steps that are taken to get it to the point that it is now.
@@ -33,13 +33,13 @@ Any changes made will disappear if you kill the image or restart the computer. S
 When the docker image has finished building the last thing it does is map the 'config/asound.conf' file to '/etc/asound.conf'. We can change it without having to ssh into the box. Sadly, we still need to ssh into the box to find out what sound card we want...
 
 ```
-$ docker exec -ti sushi aplay -l
+$ make devices
 ```
 
 My output looks like this:
 
 ```
-user@computer:~$ docker exec -ti sushi aplay -l
+user@computer:~$ make devices
 **** List of PLAYBACK Hardware Devices ****
 card 0: PCH [HDA Intel PCH], device 0: ALC1220 Analog [ALC1220 Analog]
   Subdevices: 1/1
@@ -61,11 +61,11 @@ defaults.pcm.card 1
 You can run this command to play sound from inside docker:
 
 ```
-$ docker exec -ti sushi bash -c "cd /code && make onetwo"
+$ make soundcheck
 ```
 
 If you made a change, you may need to restart the docker container:
 
 ```
-$ docker restart sushi
+$ make restart
 ```
