@@ -7,6 +7,7 @@ services:
     volumes:
       - ./:/code
       - ./config/asound.conf:/etc/asound.conf
+      - ./config/limits.conf:/etc/security/limits.conf
     devices:
       - /dev/snd:/dev/snd # enable sound
     command: /root/sequensual/bin/sequencer
