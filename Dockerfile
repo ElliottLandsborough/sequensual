@@ -66,6 +66,15 @@ RUN ln -s /root/fifo/src/circularfifo_memory_relaxed_aquire_release.hpp /root/su
 RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_LV2=off -DVST2_SDK_PATH=/root/vst24-1" -b
 ENV PATH="/root/sushi/build/release:${PATH}"
 
+# mda todo: compile this?
+# /root/mda-vst3.vst3/Contents/x86_64-linux/mda-vst3.so
+WORKDIR /root
+RUN wget https://github.com/elk-audio/elk-examples/releases/download/examples_01/mda-vst3.vst3.tar.xz
+RUN tar -xvf mda-vst3.vst3.tar.xz
+
+# install jackd
+RUN apt-get install -y jackd1
+
 # go stuff
 COPY . /root/sequensual
 WORKDIR /root/sequensual
