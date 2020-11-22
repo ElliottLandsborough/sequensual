@@ -18,19 +18,19 @@ onetwo:
 	speaker-test -c 2
 
 soundcheck:
-    docker exec -ti sushi bash -c "cd /code && make onetwo"
+	docker exec -ti sushi bash -c "cd /code && make onetwo"
 
 dockerbuild:
-    docker-compose up -d --build
+	docker-compose up -d --build
 
 ssh:
 	docker exec -ti sushi /bin/bash
 
 devices:
-    docker exec -ti sushi aplay -l
+	docker exec -ti sushi aplay -l
 
 kill:
-    docker kill sushi
+	docker kill sushi
 
 restart:
 	docker restart sushi
