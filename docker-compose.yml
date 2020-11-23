@@ -4,6 +4,8 @@ services:
   sushi:
     build: .
     container_name: sushi
+    ports:
+      - "51051:51051"
     volumes:
       - ./:/code
       - ./config/asound.conf:/etc/asound.conf
