@@ -2,10 +2,13 @@ build:
 	GOOS=linux GOARCH=amd64 go build -o bin/sequencer ./sequencer.go ./timer.go ./constants.go ./main.go
 
 run:
-	go run ./sequencer.go ./timer.go ./constants.go ./main.go
+	go run ./sequencer.go ./timer.go ./constants.go ./main.go ./osc.go
+
+runosc:
+	go run ./osc.go
 
 deps:
-	go get ./...
+	go get ./... && go get -u google.golang.org/grpc
 
 test:
 	go get github.com/stretchr/testify/assert
@@ -34,6 +37,9 @@ kill:
 
 restart:
 	docker restart sushi
+
+runappimage:
+	./Sushi-x86_64_0.10.3.AppImage -j --multicore-processing=2 --connect-ports -c /config_play_vst3_desktop.json
 
 runmda:
 	docker exec -ti sushi bash -c "sushi -j --multicore-processing=2 --connect-ports -c /code/example/config_play_vst3_desktop.json"

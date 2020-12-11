@@ -6,7 +6,10 @@ import (
 )
 
 func main() {
+
 	fmt.Printf("%s\n", "lol")
+
+	control()
 
 	// sleep for a while so the machine doesn't stop itself from running
 	time.Sleep(24 * 60 * 60 * time.Second)

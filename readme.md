@@ -69,3 +69,10 @@ If you made a change, you may need to restart the docker container:
 ```
 $ make restart
 ```
+
+# AppImage
+
+* Copy `example/mda-vst3.vst3` to home dir (or root if you are logged in as root)
+* run `make runappimage`
+
+To do: Test with the v0.11 AppImage. Currently not working as expected in Ubuntu Studio 20.04
