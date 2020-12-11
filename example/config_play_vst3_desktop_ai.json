@@ -15,7 +15,7 @@
             ],
             "plugins" : [
                 {
-                    "path" : "~/mda-vst3.vst3",
+                    "path" : "/mda-vst3.vst3",
                     "name" : "jx10",
                     "type" : "vst3x",
                     "uid" : "mda JX10"

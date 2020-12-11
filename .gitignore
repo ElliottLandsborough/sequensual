@@ -1,2 +1,4 @@
 bin
 asound.conf
+pkg/
+src/
