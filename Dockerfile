@@ -53,7 +53,7 @@ RUN ln -s /root/vst24-2/VST2_SDK/pluginterfaces /root/vst24-1/pluginterfaces
 # prepare for compilation
 RUN mkdir /root/sushi
 WORKDIR /root/sushi
-RUN git clone -b 0.10.3  https://github.com/elk-audio/sushi.git /root/sushi
+RUN git clone -b 0.11.0  https://github.com/elk-audio/sushi.git /root/sushi
 RUN git submodule update --init --recursive
 
 # add fifo dependency
