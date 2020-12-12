@@ -1,5 +1,5 @@
 build:
-	GOOS=linux GOARCH=amd64 go build -o bin/sequencer ./sequencer.go ./timer.go ./constants.go ./main.go
+	GOOS=linux GOARCH=amd64 go build -o bin/sequencer *.go
 
 run:
 	go run *.go oldMain
