@@ -11,7 +11,7 @@ RUN apt-get install -y libprotobuf-dev protobuf-compiler autoconf libtool
 RUN apt-get install -y pkg-config cmake liblilv-dev
 RUN apt-get install -y lilv-utils lv2-examples mda-lv2
 RUN apt-get install -y libjack-jackd2-0 libjack-jackd2-dev
-RUN apt-get install -y liblo7 liblo-dev
+RUN apt-get install -y liblo7 liblo-dev wget
 
 # Install latest golang
 RUN wget https://golang.org/dl/go1.15.6.linux-amd64.tar.gz
