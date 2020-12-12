@@ -13,16 +13,19 @@ RUN apt-get install -y lilv-utils lv2-examples mda-lv2
 RUN apt-get install -y libjack-jackd2-0 libjack-jackd2-dev
 RUN apt-get install -y liblo7 liblo-dev wget
 
+# Install alsa & pulse
+RUN apt-get update && apt-get install -y alsa-utils 
+RUN apt-get update && apt-get install -y alsa-tools
+RUN apt-get update && apt-get install -y pulseaudio
+ENV ASOUND=PureAudio
+
 # Install latest golang
 RUN wget https://golang.org/dl/go1.15.6.linux-amd64.tar.gz
 RUN tar -C /usr/local -xzf go1.15.6.linux-amd64.tar.gz
 ENV PATH="/usr/local/go/bin:${PATH}"
+ENV PATH="/root/go/bin:${PATH}"
 RUN mkdir -p /root/go
 ENV GOPATH="/root/go"
-
-# install alsa & pulse
-RUN apt-get update && apt-get install -y alsa-utils alsa-tools pulseaudio
-ENV ASOUND=PureAudio
 
 # GRPC
 RUN mkdir /root/grpc
@@ -57,21 +60,13 @@ WORKDIR /root/vst24-2
 RUN git clone https://github.com/ElliottLandsborough/mathreverb /root/vst24-2
 RUN ln -s /root/vst24-2/VST2_SDK/pluginterfaces /root/vst24-1/pluginterfaces 
 
-# prepare for compilation
+# Prepare for compilation
 RUN mkdir /root/sushi
 WORKDIR /root/sushi
-RUN git clone -b 0.11.0  https://github.com/elk-audio/sushi.git /root/sushi
-RUN git submodule update --init --recursive
+RUN git clone -b 0.11.0  https://github.com/elk-audio/sushi.git /root/sushi --recursive
 
-# add fifo dependency
-RUN mkdir /root/fifo
-RUN git clone https://github.com/ElliottLandsborough/lock-free-wait-free-circularfifo /root/fifo
-RUN mkdir /root/sushi/src/library/fifo
-RUN ln -s /root/fifo/src/circularfifo_memory_relaxed_aquire_release.hpp /root/sushi/src/library/fifo/circularfifo_memory_relaxed_aquire_release.h
-
-# compile and add to path
+# Compile and add to path
 RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_LV2=off -DVST2_SDK_PATH=/root/vst24-1" -b
-RUN ln -s /root/sushi/build/release /usr/bin/sushi
 
 # mda todo: compile this?
 # /root/mda-vst3.vst3/Contents/x86_64-linux/mda-vst3.so

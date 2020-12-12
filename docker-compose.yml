@@ -12,7 +12,7 @@ services:
       - ./config/limits.conf:/etc/security/limits.conf
     devices:
       - /dev/snd:/dev/snd # enable sound
-    command: /root/sequensual/bin/sequencer
+    command: sequensual oldMain
     group_add:
       - audio
     privileged: true

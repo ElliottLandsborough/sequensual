@@ -1,5 +1,5 @@
 build:
-	GOOS=linux GOARCH=amd64 go build -o bin/sequencer *.go
+	GOOS=linux GOARCH=amd64 go build -o ${GOPATH}/bin/sequensual *.go
 
 run:
 	go run *.go oldMain
