@@ -82,6 +82,7 @@ RUN tar -xvf mda-vst3.vst3.tar.xz
 # install jackd
 RUN apt-get install -y jackd1
 
+# This should be in its own container... (with the above in another)
 RUN mkdir -p /root/go/src/github.com/ElliottLandsborough/sequensual
 COPY . /root/go/src/github.com/ElliottLandsborough/sequensual
 WORKDIR /root/go/src/github.com/ElliottLandsborough/sequensual
