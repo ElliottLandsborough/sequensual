@@ -7,8 +7,8 @@ import (
 // Sequencer describes the mechanism that
 // Triggers and synchronizses a Pattern for audio playback.
 type Sequencer struct {
-	Timer   *Timer
-	Beat    int
+	Timer *Timer
+	Beat  int
 }
 
 // NewSequencer creates and returns a pointer to a New Sequencer.
@@ -77,5 +77,6 @@ func (s *Sequencer) ProcessAudio(out []float32) {
 // Triggers a playback by resetting the playhead for the matching tracks.
 func (s *Sequencer) PlayTrigger() {
 	fmt.Printf("woof")
+	control()
 	return
 }

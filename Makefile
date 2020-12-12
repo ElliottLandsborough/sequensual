@@ -2,10 +2,10 @@ build:
 	GOOS=linux GOARCH=amd64 go build -o bin/sequencer ./sequencer.go ./timer.go ./constants.go ./main.go
 
 run:
-	go run ./sequencer.go ./timer.go ./constants.go ./main.go ./osc.go
+	go run *.go oldMain
 
 runosc:
-	go run ./osc.go
+	go run *.go control
 
 deps:
 	go get ./... && go get -u google.golang.org/grpc
