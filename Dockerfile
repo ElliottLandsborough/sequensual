@@ -64,7 +64,7 @@ RUN ln -s /root/fifo/src/circularfifo_memory_relaxed_aquire_release.hpp /root/su
 
 # compile and add to path
 RUN ./generate --cmake-args="-DWITH_XENOMAI=off -DWITH_LV2=off -DVST2_SDK_PATH=/root/vst24-1" -b
-ENV PATH="/root/sushi/build/release:${PATH}"
+RUN ln -s /root/sushi/build/release /usr/bin/sushi
 
 # mda todo: compile this?
 # /root/mda-vst3.vst3/Contents/x86_64-linux/mda-vst3.so
