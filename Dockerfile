@@ -8,10 +8,17 @@ RUN apt-get upgrade -y
 RUN apt-get install -y git nano python cmake build-essential
 RUN apt-get install -y libsndfile1 libsndfile1-dev libasound2 libasound2-dev
 RUN apt-get install -y libprotobuf-dev protobuf-compiler autoconf libtool
-RUN apt-get install -y pkg-config cmake golang liblilv-dev
+RUN apt-get install -y pkg-config cmake liblilv-dev
 RUN apt-get install -y lilv-utils lv2-examples mda-lv2
 RUN apt-get install -y libjack-jackd2-0 libjack-jackd2-dev
 RUN apt-get install -y liblo7 liblo-dev
+
+# Install latest golang
+RUN wget https://golang.org/dl/go1.15.6.linux-amd64.tar.gz
+RUN tar -C /usr/local -xzf go1.15.6.linux-amd64.tar.gz
+ENV PATH="/usr/local/go/bin:${PATH}"
+RUN mkdir -p /root/go
+ENV GOPATH="/root/go"
 
 # install alsa & pulse
 RUN apt-get update && apt-get install -y alsa-utils alsa-tools pulseaudio
@@ -75,7 +82,8 @@ RUN tar -xvf mda-vst3.vst3.tar.xz
 # install jackd
 RUN apt-get install -y jackd1
 
-# go stuff
-COPY . /root/sequensual
-WORKDIR /root/sequensual
+RUN mkdir -p /root/go/src/github.com/ElliottLandsborough/sequensual
+COPY . /root/go/src/github.com/ElliottLandsborough/sequensual
+WORKDIR /root/go/src/github.com/ElliottLandsborough/sequensual
+RUN make deps
 RUN make build
