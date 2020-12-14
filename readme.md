@@ -76,3 +76,7 @@ $ make restart
 * run `make runappimage`
 
 To do: Test with the v0.11 AppImage. Currently not working as expected in Ubuntu Studio 20.04
+
+# Front end
+
+Run `make wails`, then `make runwails`. If you run the Sushi appImage first, you can trigger audio by clicking the wails logo in the GUI.

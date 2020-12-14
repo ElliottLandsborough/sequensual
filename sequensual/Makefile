@@ -8,10 +8,13 @@ runosc:
 	go run *.go control
 
 deps:
-	go get ./... && go get -u google.golang.org/grpc
+	go get ./... && go get -u google.golang.org/grpc && go get -u github.com/wailsapp/wails/cmd/wails
 
 wails:
-	go get -u github.com/wailsapp/wails/cmd/wails
+	wails build
+
+runwails:
+	./build/sequensual wails
 
 test:
 	go get github.com/stretchr/testify/assert
