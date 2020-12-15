@@ -2,7 +2,10 @@ package main
 
 import (
 	"fmt"
+	"sync"
 )
+
+var wg = sync.WaitGroup{}
 
 // Sequencer describes the mechanism that
 // Triggers and synchronizses a Pattern for audio playback.
@@ -24,6 +27,7 @@ type Trigger struct {
 	Note int32
 	Velocity float32
 	Length int
+	Active bool
 }
 
 // NewSequencer creates and returns a pointer to a New Sequencer.
@@ -50,7 +54,11 @@ func MakeSteps(length int) (*map[int]*Step) {
 	stps := make(map[int]*Step, length)
 
 	for i := 0; i < length; i++ {
-		stps[i] = &Step{}
+		stps[i] = &Step{ 
+			Number: i,
+			Active: false,
+			Trig: &Trigger{ Active: true },
+		}
 	}
 
 	return &stps
@@ -60,6 +68,7 @@ func MakeSteps(length int) (*map[int]*Step) {
 // Starts counting the Pulses Per Quarter note for the given BPM.
 // Triggers samples based on each 16th note that is triggered.
 func (s *Sequencer) Start() {
+	wg.Add(1)
 	go func() {
 		ppqnCount := 0
 
@@ -71,9 +80,7 @@ func (s *Sequencer) Start() {
 				// Trigger playback after 6 pulses, which is 16th note precision
 				// TODO add in time signatures
 				if ppqnCount%(int(Ppqn)/4) == 0 {
-					go s.PlayTrigger()
-
-					s.Beat++
+					activeStep((*s.Steps)[s.Beat], s)
 				}
 
 				// Reset the ppqn Count and Beat count after 4 bars of quarter notes
@@ -81,14 +88,28 @@ func (s *Sequencer) Start() {
 				if ppqnCount == (int(Ppqn) * 4) {
 					ppqnCount = 0
 					s.Beat = 0
+					wg.Done()
 				}
 
 			}
 		}
 	}()
 
-	// loop
 	go s.Timer.Start()
+	wg.Wait()
+}
+
+func activeStep(stp *Step, s *Sequencer) {
+	stp.Active = true;
+
+	if stp.Trig.Active {
+		go s.PlayTrigger(stp)
+	} else {
+		fmt.Printf("no trig")
+	}
+
+	s.Beat++
+	stp.Active = false;
 }
 
 // ProcessAudio is the callback function for the portaudio stream
@@ -109,8 +130,8 @@ func (s *Sequencer) ProcessAudio(out []float32) {
 
 // PlayTrigger triggers a playback for any track that is active for the passed in index.
 // Triggers a playback by resetting the playhead for the matching tracks.
-func (s *Sequencer) PlayTrigger() {
-	fmt.Printf("woof")
-	control()
+func (s *Sequencer) PlayTrigger(stp *Step) {
+	fmt.Println(stp)
+	//control()
 	return
 }

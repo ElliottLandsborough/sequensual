@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+
 // Timer is a struct that defines the basic synchronization
 // behavior of the step sequencer
 type Timer struct {
