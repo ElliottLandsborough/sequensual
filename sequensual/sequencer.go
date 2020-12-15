@@ -66,7 +66,10 @@ func MakeSteps(length int) (*map[int]*Step) {
 // Starts counting the Pulses Per Quarter note for the given BPM.
 // Triggers samples based on each 16th note that is triggered.
 func (s *Sequencer) Start() {
+
+	// TODO: wg currently not working - is this needed?
 	wg.Add(1)
+
 	go func() {
 		ppqnCount := 0
 
@@ -96,15 +99,21 @@ func (s *Sequencer) Start() {
 	}()
 
 	go s.Timer.Start()
+
+	// TODO: wg currently not working - is this needed?
 	wg.Wait()
 }
 
 func (s *Sequencer) Stop() {
-	wg.Done()
+	fmt.Printf("I wish it would stop now lol")
 }
 
 func (s *Sequencer) GetLength() int {
 	return s.Length
+}
+
+func (s *Sequencer) GetSteps() *map[int]*Step {
+	return s.Steps
 }
 
 func activeStep(stp *Step, s *Sequencer) {

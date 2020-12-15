@@ -3,7 +3,14 @@
     <h1>Sequensual</h1>
     <a @click="play">Play</a>
     <a @click="stop">Stop</a>
-    {{ seqLength }}
+    <div class="steps">
+      <button
+        v-for="step in steps"
+        :key="step.Number"
+        v-html="`step: ${step.Number}`"
+        :class="['steps__step', { 'steps__step--active-trig': step.Trig.Active }]"
+        />
+    </div>
   </div>
 </template>
 
@@ -11,23 +18,20 @@
 export default {
   data() {
     return {
-      seqLength: null
+      steps: this.getSteps()
     }
   },
-  setup() {
-    this.length()
-  },
   methods: {
-    length() {
-      window.backend.s.GetLength().then(result => {
-        this.seqLength = result
+    getSteps() {
+      window.backend.Sequencer.GetSteps().then(result => {
+        this.steps = result
       });
     },
     play() {
-      window.backend.s.Start();
+      window.backend.Sequencer.Start();
     },
     stop() {
-      window.backend.s.Stop();
+      window.backend.Sequencer.Stop();
     }
   }
 };
@@ -61,5 +65,10 @@ a {
   border-radius: 10px;
   padding: 9px;
   cursor: pointer;
+}
+
+.steps__step--active-trig {
+  background: red;
+  color: white;
 }
 </style>
