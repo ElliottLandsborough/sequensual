@@ -88,7 +88,9 @@ func (s *Sequencer) Start() {
 				if ppqnCount == (int(Ppqn) * 4) {
 					ppqnCount = 0
 					s.Beat = 0
-					wg.Done()
+
+					// TODO: move this, as it currently prevents last step from activating
+					//wg.Done()
 				}
 
 			}
