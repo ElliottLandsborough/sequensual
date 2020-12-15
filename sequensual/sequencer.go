@@ -12,7 +12,7 @@ var wg = sync.WaitGroup{}
 type Sequencer struct {
 	Timer *Timer
 	Beat  int
-	Channel int32
+	Channel int
 	Steps *map[int]*Step
 	Length int
 }
@@ -33,14 +33,12 @@ type Trigger struct {
 // NewSequencer creates and returns a pointer to a New Sequencer.
 // Returns an error if there is one encountered
 // During initializing portaudio, or the default stream
-func NewSequencer(length int, tempo float32) (*Sequencer, error) {
-
-	fmt.Println("new seq")
+func NewSequencer(length, channel int, tempo float32) (*Sequencer, error) {
 
 	s := &Sequencer{
 		Timer: NewTimer(tempo),
 		Beat:  0,
-		Channel: 0,
+		Channel: channel,
 		Steps: MakeSteps(length),
 		Length: length,
 	}
@@ -101,13 +99,21 @@ func (s *Sequencer) Start() {
 	wg.Wait()
 }
 
+func (s *Sequencer) Stop() {
+	wg.Done()
+}
+
+func (s *Sequencer) GetLength() int {
+	return s.Length
+}
+
 func activeStep(stp *Step, s *Sequencer) {
 	stp.Active = true;
 
 	if stp.Trig.Active {
 		go s.PlayTrigger(stp)
 	} else {
-		fmt.Printf("no trig")
+		fmt.Println("Step:", stp.Number, "No Trig.")
 	}
 
 	s.Beat++
@@ -133,7 +139,7 @@ func (s *Sequencer) ProcessAudio(out []float32) {
 // PlayTrigger triggers a playback for any track that is active for the passed in index.
 // Triggers a playback by resetting the playhead for the matching tracks.
 func (s *Sequencer) PlayTrigger(stp *Step) {
-	fmt.Println(stp)
+	fmt.Println("Step:", stp.Number, "Trig note:", stp.Trig.Note)
 	//control()
 	return
 }

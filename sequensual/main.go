@@ -21,17 +21,17 @@ func control() string {
 }
 
 func main() {
-	//wailsApp()
-	s, err := NewSequencer(16, 140.0)
+
+	s, err := NewSequencer(16, 0, 140.0)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err)
 		return
 	}
 
-	s.Start()
+	wailsInit(s)
 }
 
-func wailsApp() {
+func wailsInit(s *Sequencer) {
 
 	js := mewn.String("./frontend/dist/app.js")
 	css := mewn.String("./frontend/dist/app.css")
@@ -46,8 +46,7 @@ func wailsApp() {
 	})
 
 	// app bindings
-	app.Bind(control)
-
+	app.Bind(s)
 
 	app.Run()
 }
