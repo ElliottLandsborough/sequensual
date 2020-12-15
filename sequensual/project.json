@@ -20,10 +20,6 @@
  "Platform": "",
  "Architecture": "",
  "LdFlags": "",
- "GoPath": ".",
- "UseFirebug": false,
- "platforms": [
-  "linux",
-  "darwin"
- ]
+ "GoPath": "",
+ "UseFirebug": false
 }

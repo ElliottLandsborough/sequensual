@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/hypebeast/go-osc/osc"
@@ -22,25 +21,14 @@ func control() string {
 }
 
 func main() {
-	fmt.Printf("Starting...\n")
-
-	if len(os.Args[1:]) > 0 {
-
-		arg := os.Args[1]
-
-		switch arg {
-		case "control":
-			control()
-		case "oldMain":
-			oldMain()
-		case "wails":
-			wailsApp()
-		default:
-			fmt.Printf("Please choose a command.\n")
-		}
+	//wailsApp()
+	s, err := NewSequencer(16, 140.0)
+	if err != nil {
+		fmt.Printf("Error: %v\n", err)
+		return
 	}
 
-	fmt.Printf("Finished.\n")
+	s.Start()
 }
 
 func wailsApp() {
@@ -56,25 +44,10 @@ func wailsApp() {
 		CSS:    css,
 		Colour: "#131313",
 	})
+
+	// app bindings
 	app.Bind(control)
+
+
 	app.Run()
-}
-
-func oldMain() {
-	fmt.Printf("%s\n", "lol")
-
-	// sleep for a while so the machine doesn't stop itself from running
-	time.Sleep(24 * 60 * 60 * time.Second)
-
-	s, err := NewSequencer()
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-
-	s.Start()
-
-	for {
-		time.Sleep(time.Second)
-	}
 }

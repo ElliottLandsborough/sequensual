@@ -1,7 +1,8 @@
-bin
+sequensual/bin
 asound.conf
-pkg/
-src/
+sequensual/pkg/
+sequensual/src/
+sequensual/build
 
 
 # Compiled source #

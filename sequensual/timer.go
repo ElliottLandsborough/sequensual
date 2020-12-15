@@ -13,11 +13,11 @@ type Timer struct {
 }
 
 // NewTimer creates and returns a new pointer to a Timer.
-func NewTimer() *Timer {
+func NewTimer(tempo float32) *Timer {
 	t := &Timer{
 		Pulses: make(chan int),
 		Done:   make(chan bool),
-		Tempo:  float32(DefaultTempo),
+		Tempo:  tempo,
 	}
 
 	return t

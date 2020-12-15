@@ -9,18 +9,51 @@ import (
 type Sequencer struct {
 	Timer *Timer
 	Beat  int
+	Channel int32
+	Steps *map[int]*Step
+	Length int
+}
+
+type Step struct {
+	Number int
+	Active bool
+	Trig *Trigger
+}
+
+type Trigger struct {
+	Note int32
+	Velocity float32
+	Length int
 }
 
 // NewSequencer creates and returns a pointer to a New Sequencer.
 // Returns an error if there is one encountered
 // During initializing portaudio, or the default stream
-func NewSequencer() (*Sequencer, error) {
+func NewSequencer(length int, tempo float32) (*Sequencer, error) {
+
+	fmt.Println("new seq")
+
 	s := &Sequencer{
-		Timer: NewTimer(),
+		Timer: NewTimer(tempo),
 		Beat:  0,
+		Channel: 0,
+		Steps: MakeSteps(length),
+		Length: length,
 	}
 
 	return s, nil
+}
+
+// MakeSteps creates and returns a map of key value pairs, 
+// containing integer keys, one for each step, and a pointers to steps
+func MakeSteps(length int) (*map[int]*Step) {
+	stps := make(map[int]*Step, length)
+
+	for i := 0; i < length; i++ {
+		stps[i] = &Step{}
+	}
+
+	return &stps
 }
 
 // Start starts the sequencer.
@@ -54,6 +87,7 @@ func (s *Sequencer) Start() {
 		}
 	}()
 
+	// loop
 	go s.Timer.Start()
 }
 

@@ -10,7 +10,7 @@ var Minute = 60.0
 var Microsecond = 1000000000
 
 // DefaultTempo - The Default BPM of the step sequencer
-var DefaultTempo = 120.0
+var DefaultTempo float32 = 120.0
 
 // SampleRate - The standard audio sampling rate of 48kHz (48000)
 var SampleRate = 48000

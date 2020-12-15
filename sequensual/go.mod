@@ -1,4 +1,4 @@
-module github.com/ElliottLandsborough/Sequensual
+module sequensual
 
 go 1.15
 
