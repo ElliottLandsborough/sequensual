@@ -1,24 +1,21 @@
-build:
-	GOOS=linux GOARCH=amd64 go build -o ${GOPATH}/bin/sequensual *.go
-
-run:
-	go run *.go oldMain
-
-runosc:
-	go run *.go control
-
 deps:
 	go get ./... && go get -u google.golang.org/grpc && go get -u github.com/wailsapp/wails/cmd/wails
+	
+runmain:
+	go run *.go main
 
-wails:
+build:
 	wails build
 
-runwails:
-	./build/sequensual wails
+wailsserve:
+	wails serve
+
+nodeserve:
+	cd frontend; npm run serve
 
 test:
 	go get github.com/stretchr/testify/assert
 	go test -v ./... -race -coverprofile=coverage.txt -covermode=atomic
 
 clean:
-	rm bin/sequencer
+	rm build/sequensual

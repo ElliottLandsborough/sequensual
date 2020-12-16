@@ -7,5 +7,3 @@ require (
 	github.com/leaanthony/mewn v0.10.7
 	github.com/wailsapp/wails v1.10.1
 )
-
-replace github.com/wailsapp/wails v1.10.1 => ../../../go/pkg/mod/github.com/wailsapp/wails@v1.10.1/

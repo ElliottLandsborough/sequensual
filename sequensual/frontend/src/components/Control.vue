@@ -1,8 +1,9 @@
 <template>
   <div class="container">
-    <h1>Sequensual</h1>
-    <a @click="play">Play</a>
-    <a @click="stop">Stop</a>
+    <div class="transport">
+      <a @click="play" class="transport__play">Play</a>
+      <a @click="stop" class="transport__stop">Stop</a>
+    </div>
     <div class="steps">
       <button
         v-for="step in steps"
@@ -65,6 +66,22 @@ a {
   border-radius: 10px;
   padding: 9px;
   cursor: pointer;
+}
+
+.transport {
+  display: flex;
+  justify-content: center;
+}
+
+.transport__play {
+  margin-right: 10px;
+}
+
+.steps {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  grid-gap: 10px;
 }
 
 .steps__step--active-trig {

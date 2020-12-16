@@ -1,6 +1,0 @@
-# have alsa installed, run this: aplay -l
-# set 'card' below to the card you want.
-# I have no idea what the 'PCH' comment is about btw.
-
-defaults.pcm.card 1      # or better "PCH"
-defaults.pcm.device 0

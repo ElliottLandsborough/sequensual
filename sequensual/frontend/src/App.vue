@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <img alt="Wails logo" src="./assets/images/logo.png" class="logo zoomIn">
-    <HelloWorld/>
+    <h1>Sequensual</h1>
+    <Control />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Control from "./components/Control.vue";
 import "./assets/css/main.css";
 
 export default {
   name: "app",
   components: {
-    HelloWorld
+    Control
   }
 };
 </script>

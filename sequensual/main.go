@@ -2,23 +2,9 @@ package main
 
 import (
 	"fmt"
-	"time"
-
-	"github.com/hypebeast/go-osc/osc"
 	"github.com/leaanthony/mewn"
 	"github.com/wailsapp/wails"
 )
-
-func control() string {
-	client := osc.NewClient("localhost", 24024)
-	noteOn := osc.NewMessage("/keyboard_event/main", string("note_on"), int32(0), int32(50), float32(1))
-	noteOff := osc.NewMessage("/keyboard_event/main", string("note_off"), int32(0), int32(50), float32(1))
-	client.Send(noteOn)
-	fmt.Println(noteOn)
-	time.Sleep(time.Second)
-	client.Send(noteOff)
-	return "lol"
-}
 
 func main() {
 
@@ -37,8 +23,8 @@ func wailsInit(s *Sequencer) {
 	css := mewn.String("./frontend/dist/app.css")
 
 	app := wails.CreateApp(&wails.AppConfig{
-		Width:  1024,
-		Height: 768,
+		Width:  1280,
+		Height: 940,
 		Title:  "Sequensual",
 		JS:     js,
 		CSS:    css,
