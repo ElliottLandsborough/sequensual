@@ -55,7 +55,7 @@ func MakeSteps(length int) (*map[int]*Step) {
 		stps[i] = &Step{ 
 			Number: i,
 			Active: false,
-			Trig: &Trigger{ Active: true },
+			Trig: &Trigger{},
 		}
 	}
 
@@ -104,18 +104,6 @@ func (s *Sequencer) Start() {
 	wg.Wait()
 }
 
-func (s *Sequencer) Stop() {
-	fmt.Printf("I wish it would stop now lol")
-}
-
-func (s *Sequencer) GetLength() int {
-	return s.Length
-}
-
-func (s *Sequencer) GetSteps() *map[int]*Step {
-	return s.Steps
-}
-
 func activeStep(stp *Step, s *Sequencer) {
 	stp.Active = true;
 
@@ -149,6 +137,22 @@ func (s *Sequencer) ProcessAudio(out []float32) {
 // Triggers a playback by resetting the playhead for the matching tracks.
 func (s *Sequencer) PlayTrigger(stp *Step) {
 	fmt.Println("Step:", stp.Number, "Trig note:", stp.Trig.Note)
-	//control()
+	oscControl()
 	return
+}
+
+func (s *Sequencer) Stop() {
+	fmt.Printf("I wish it would stop now lol")
+}
+
+func (s *Sequencer) GetLength() int {
+	return s.Length
+}
+
+func (s *Sequencer) GetSteps() *map[int]*Step {
+	return s.Steps
+}
+
+func (s *Sequencer) SetStep(n int, a bool) {
+	(*s.Steps)[n].Trig.Active = a
 }

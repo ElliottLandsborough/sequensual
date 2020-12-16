@@ -5,18 +5,23 @@
       <a @click="stop" class="transport__stop">Stop</a>
     </div>
     <div class="steps">
-      <button
+      <Step
         v-for="step in steps"
         :key="step.Number"
-        v-html="`step: ${step.Number}`"
-        :class="['steps__step', { 'steps__step--active-trig': step.Trig.Active }]"
+        :step="step"
+        :callback="getSteps"
         />
     </div>
   </div>
 </template>
 
 <script>
+import Step from '@/components/Step'
+
 export default {
+  components: {
+    Step
+  },
   data() {
     return {
       steps: this.getSteps()
@@ -82,10 +87,6 @@ a {
   display: grid;
   grid-template-columns: repeat(16, 1fr);
   grid-gap: 10px;
-}
-
-.steps__step--active-trig {
-  background: red;
-  color: white;
+  padding-top:40px;
 }
 </style>
